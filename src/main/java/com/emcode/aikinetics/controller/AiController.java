@@ -4,6 +4,8 @@ import com.emcode.aikinetics.service.AIService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/ai/ask")
 public class AiController {
@@ -15,7 +17,7 @@ public class AiController {
     }
 
     @PostMapping
-    public ResponseEntity<String> askAi(@RequestBody String prompt) {
+    public ResponseEntity<String> askAi(@RequestBody String prompt) throws IOException, InterruptedException {
         return ResponseEntity.ok(aiService.getAiResponse(prompt));
 
     }
