@@ -16,15 +16,23 @@ import java.util.Map;
 @Service
 public class OpenAiServiceImpl implements AIService {
 
-    @Value("${openai.api.key}")
-    private String apiKey;
 
-    private final  ObjectMapper objectMapper = new ObjectMapper();
+    private final String apiKey;
+    private final ObjectMapper objectMapper;
+    private final HttpClient client;
+
+    public OpenAiServiceImpl(
+            HttpClient client,
+            ObjectMapper objectMapper,
+            @Value("${openai.api.key}") String apiKey
+    ) {
+        this.client = client;
+        this.objectMapper = objectMapper;
+        this.apiKey = apiKey;
+    }
 
     @Override
     public String getAiResponse(String prompt) throws IOException, InterruptedException {
-
-        HttpClient client = HttpClient.newHttpClient();
 
         Map<String, Object> requestBody = Map.of(
                 "model", "gpt-4o",

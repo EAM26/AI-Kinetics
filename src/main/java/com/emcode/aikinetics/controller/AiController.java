@@ -18,7 +18,11 @@ public class AiController {
 
     @PostMapping
     public ResponseEntity<String> askAi(@RequestBody String prompt) throws IOException, InterruptedException {
-        return ResponseEntity.ok(aiService.getAiResponse(prompt));
+        String responseBody = aiService.getAiResponse(prompt);
+        System.out.println("**********************************");
+        System.out.println(responseBody);
+        System.out.println("**********************************");
+        return ResponseEntity.ok(responseBody);
 
     }
 
