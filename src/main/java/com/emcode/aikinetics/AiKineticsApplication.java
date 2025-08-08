@@ -1,8 +1,7 @@
 package com.emcode.aikinetics;
 
-import com.emcode.aikinetics.service.AIService;
-import com.emcode.aikinetics.service.OpenAiServiceImpl;
-import org.springframework.beans.factory.annotation.Value;
+import com.emcode.aikinetics.model.Account;
+import com.emcode.aikinetics.repository.AccountRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AiKineticsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AiKineticsApplication.class, args);
+       SpringApplication.run(AiKineticsApplication.class, args);
+
+
+
+
+
 
 
     }
