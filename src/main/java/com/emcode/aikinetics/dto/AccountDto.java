@@ -1,11 +1,16 @@
 package com.emcode.aikinetics.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class AccountDto {
 
@@ -15,6 +20,7 @@ public class AccountDto {
 
     @Email
     private String email;
+
 
     @NotBlank(message = "Password should not be empty.")
     @Size(min = 8, message = "Password should contain eight or more characters.")

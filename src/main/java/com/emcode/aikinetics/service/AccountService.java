@@ -14,9 +14,8 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public String createAccount(AccountDto accountDto) {
-        accountRepository.save(mapToEntity(accountDto));
-        return "Account created";
+    public Account createAccount(AccountDto accountDto) {
+       return accountRepository.save(mapToEntity(accountDto));
     }
 
     private Account mapToEntity(AccountDto dto) {
