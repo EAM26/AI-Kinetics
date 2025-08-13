@@ -30,14 +30,14 @@ class AccountServiceTest {
 
     @Test
     void createAccount() {
-
-        AccountDto input = AccountDto.builder()
+        // Arrange
+        var input = AccountDto.builder()
                 .name("myName")
                 .email("mail@gmail.nl")
                 .password("1234ABC!")
                 .build();
 
-        Account saved = Account.builder()
+        var saved = Account.builder()
                 .id(1L)
                 .name("myName")
                 .email("mail@gmail.nl")
@@ -46,8 +46,10 @@ class AccountServiceTest {
 
         when(accountRepository.save(any(Account.class))).thenReturn(saved);
 
+        // Act
         Account result = accountService.createAccount(input);
 
+        // Assert
         verify(accountRepository, times(1)).save(captor.capture());
         Account toPersist = captor.getValue();
         assertThat(toPersist.getName()).isEqualTo(input.getName());
