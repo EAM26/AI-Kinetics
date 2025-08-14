@@ -1,9 +1,10 @@
 package com.emcode.aikinetics.controller;
 
-import com.emcode.aikinetics.dto.AccountDto;
+import com.emcode.aikinetics.api.controller.AccountController;
+import com.emcode.aikinetics.api.dto.AccountDto;
 import com.emcode.aikinetics.model.Account;
 import com.emcode.aikinetics.service.AccountService;
-import com.emcode.aikinetics.util.ValidationUtil;
+import com.emcode.aikinetics.api.validation.ValidationUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

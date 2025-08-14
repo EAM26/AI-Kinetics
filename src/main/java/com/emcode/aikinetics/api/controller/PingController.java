@@ -1,5 +1,6 @@
-package com.emcode.aikinetics.controller;
+package com.emcode.aikinetics.api.controller;
 
+import com.emcode.aikinetics.api.error.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,5 +19,10 @@ public class PingController {
     @GetMapping("/boom")
     public String boom() {
         throw new RuntimeException("Boom");
+    }
+
+    @GetMapping("/ex_not_found")
+    public String exNotfound() {
+        throw new NotFoundException("custom not found exception");
     }
 }

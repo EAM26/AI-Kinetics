@@ -1,4 +1,4 @@
-package com.emcode.aikinetics.util;
+package com.emcode.aikinetics.api.validation;
 
 
 import org.springframework.stereotype.Component;
