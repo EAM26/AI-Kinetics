@@ -1,9 +1,9 @@
 package com.emcode.aikinetics.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -47,8 +47,11 @@ class OpenAiServiceImplTest {
         );
         when(objectMapper.writeValueAsString(requestBody)).thenReturn("{\"dummy-json-request\":\"true\"}");
         when(httpResponse.body()).thenReturn(expectedResponse);
-        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
-                .thenReturn(httpResponse);
+        when(httpClient.send(
+                any(HttpRequest.class),
+                ArgumentMatchers.<HttpResponse.BodyHandler<String>>any()
+        )).thenReturn(httpResponse);
+
 
         // Act
         String actualResponse = aiService.getAiResponse(prompt);
