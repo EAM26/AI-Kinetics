@@ -1,6 +1,8 @@
 package com.emcode.aikinetics.service;
 
 import com.emcode.aikinetics.api.dto.account.AccountRequest;
+import com.emcode.aikinetics.api.dto.account.AccountResponse;
+import com.emcode.aikinetics.api.mapper.AccountMapper;
 import com.emcode.aikinetics.domain.model.Account;
 import com.emcode.aikinetics.domain.service.AccountService;
 import com.emcode.aikinetics.repository.AccountRepository;
@@ -46,14 +48,14 @@ class AccountServiceTest {
         when(accountRepository.save(any(Account.class))).thenReturn(saved);
 
         // Act
-        Account result = accountService.createAccount(input);
+        AccountResponse result = accountService.createAccount(input);
 
         // Assert
         verify(accountRepository, times(1)).save(captor.capture());
         Account toPersist = captor.getValue();
-        assertThat(toPersist.getName()).isEqualTo(input.getName());
-        assertThat(toPersist.getEmail()).isEqualTo(input.getEmail());
+        assertThat(toPersist.getName()).isEqualTo(input.name());
+        assertThat(toPersist.getEmail()).isEqualTo(input.email());
 
-        Assertions.assertThat(result).isEqualTo(saved);
+        Assertions.assertThat(result).isEqualTo(AccountMapper.mapToResponse(saved));
     }
 }

@@ -1,6 +1,7 @@
 package com.emcode.aikinetics.api.controller;
 
 import com.emcode.aikinetics.api.dto.account.AccountRequest;
+import com.emcode.aikinetics.api.mapper.AccountMapper;
 import com.emcode.aikinetics.api.validation.ValidationUtil;
 import com.emcode.aikinetics.domain.model.Account;
 import com.emcode.aikinetics.domain.service.AccountService;
@@ -49,7 +50,7 @@ class AccountControllerTest {
                 .build();
 
 
-        when(accountService.createAccount(input)).thenReturn(saved);
+        when(accountService.createAccount(input)).thenReturn(AccountMapper.mapToResponse(saved));
 
         // ACT
         ResultActions result = mvc.perform(post("/api/account")

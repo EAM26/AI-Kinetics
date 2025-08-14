@@ -12,8 +12,8 @@ public final class AccountMapper {
 
     public static Account mapToEntity(AccountRequest request) {
         Account account = new Account();
-        account.setName(request.getName());
-        account.setEmail(request.getEmail());
+        account.setName(request.name());
+        account.setEmail(request.email());
         return account;
     }
 }
