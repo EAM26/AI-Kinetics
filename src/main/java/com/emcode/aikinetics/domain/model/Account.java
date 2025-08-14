@@ -1,4 +1,4 @@
-package com.emcode.aikinetics.model;
+package com.emcode.aikinetics.domain.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +22,5 @@ public class Account {
 
     private String name;
     private String email;
-    private String password;
 
 }

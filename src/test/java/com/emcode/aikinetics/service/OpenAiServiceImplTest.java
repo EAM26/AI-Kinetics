@@ -1,5 +1,6 @@
 package com.emcode.aikinetics.service;
 
+import com.emcode.aikinetics.domain.service.OpenAiServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

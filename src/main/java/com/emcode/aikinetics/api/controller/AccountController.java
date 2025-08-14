@@ -1,8 +1,8 @@
 package com.emcode.aikinetics.api.controller;
 
-import com.emcode.aikinetics.api.dto.AccountDto;
-import com.emcode.aikinetics.model.Account;
-import com.emcode.aikinetics.service.AccountService;
+import com.emcode.aikinetics.api.dto.account.AccountRequest;
+import com.emcode.aikinetics.domain.model.Account;
+import com.emcode.aikinetics.domain.service.AccountService;
 import com.emcode.aikinetics.api.validation.ValidationUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +28,12 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createAccount(@Valid @RequestBody AccountDto accountDto, BindingResult br, UriComponentsBuilder ucb) {
+    public ResponseEntity<Object> createAccount(@Valid @RequestBody AccountRequest accountRequest, BindingResult br, UriComponentsBuilder ucb) {
         if (br.hasFieldErrors()) {
             return ResponseEntity.badRequest().body(validationUtil.validationMessage(br).toString());
         }
 
-        Account savedAccount = accountService.createAccount(accountDto);
+        Account savedAccount = accountService.createAccount(accountRequest);
         URI location = URI.create("/api/account/" + savedAccount.getId());
 
         return ResponseEntity.created(location).body(savedAccount);

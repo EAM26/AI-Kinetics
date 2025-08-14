@@ -1,10 +1,9 @@
-package com.emcode.aikinetics.controller;
+package com.emcode.aikinetics.api.controller;
 
-import com.emcode.aikinetics.api.controller.AccountController;
-import com.emcode.aikinetics.api.dto.AccountDto;
-import com.emcode.aikinetics.model.Account;
-import com.emcode.aikinetics.service.AccountService;
+import com.emcode.aikinetics.api.dto.account.AccountRequest;
 import com.emcode.aikinetics.api.validation.ValidationUtil;
+import com.emcode.aikinetics.domain.model.Account;
+import com.emcode.aikinetics.domain.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +37,15 @@ class AccountControllerTest {
     @Test
     void createShouldReturn201AndBody() throws Exception {
         // Arrange
-        var input = AccountDto.builder()
+        var input = AccountRequest.builder()
                 .name("myName")
                 .email("mail@gmail.nl")
-                .password("1234ABC!")
                 .build();
 
         var saved = Account.builder()
                 .id(1L)
                 .name("myName")
                 .email("mail@gmail.nl")
-                .password("1234ABC!")
                 .build();
 
 
@@ -67,7 +64,7 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$.email").value("mail@gmail.nl"));
 
 
-        verify(accountService).createAccount(any(AccountDto.class));
+        verify(accountService).createAccount(any(AccountRequest.class));
         verifyNoMoreInteractions(accountService);
 
 

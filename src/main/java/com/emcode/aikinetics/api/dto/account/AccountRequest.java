@@ -1,4 +1,4 @@
-package com.emcode.aikinetics.api.dto;
+package com.emcode.aikinetics.api.dto.account;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AccountDto {
+public class AccountRequest {
 
     @NotBlank(message = "Name should not be empty.")
     @Size(min = 3, message = "Name should contain three or more characters.")
@@ -20,11 +20,5 @@ public class AccountDto {
 
     @Email
     private String email;
-
-
-    @NotBlank(message = "Password should not be empty.")
-    @Size(min = 8, message = "Password should contain eight or more characters.")
-//    todo create password requirements with pattern
-    private String password;
 
 }
