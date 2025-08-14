@@ -1,4 +1,4 @@
-package com.emcode.aikinetics.controller;
+package com.emcode.aikinetics.api.controller;
 
 import com.emcode.aikinetics.service.AIService;
 import org.springframework.http.ResponseEntity;

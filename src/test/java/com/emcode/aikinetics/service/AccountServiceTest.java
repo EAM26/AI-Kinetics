@@ -1,6 +1,6 @@
 package com.emcode.aikinetics.service;
 
-import com.emcode.aikinetics.dto.AccountDto;
+import com.emcode.aikinetics.api.dto.AccountDto;
 import com.emcode.aikinetics.model.Account;
 import com.emcode.aikinetics.repository.AccountRepository;
 import org.assertj.core.api.Assertions;
