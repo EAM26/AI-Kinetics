@@ -9,8 +9,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException ex) {
-        ErrorResponse errorBody = new ErrorResponse("NOT_FOUND", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+        ErrorResponse errorResponseBody = new ErrorResponse("NOT_FOUND", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseBody);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleUnexpected(Exception ex) {
+        ErrorResponse  errorResponseBody = new ErrorResponse("UNEXPECTED", "Something went wrong.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseBody);
     }
 
 
