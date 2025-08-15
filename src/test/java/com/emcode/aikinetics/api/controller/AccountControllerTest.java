@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -72,6 +73,34 @@ class AccountControllerTest {
     }
 
     @Test
-    void getAccountById() {
+    void getAccountByIdShouldReturn200AndResponse() throws Exception {
+        // Arrange
+        Long id = 10L;
+        var accountRequest = AccountRequest.builder()
+                .name("myName")
+                .email("mail@gmail.nl")
+                .build();
+
+        var accountEntity = Account.builder()
+                .id(id)
+                .name("myName")
+                .email("mail@gmail.nl")
+                .build();
+
+        when(accountService.getAccountById(accountEntity.getId())).thenReturn(AccountMapper.mapToResponse(accountEntity));
+
+        // ACT
+        ResultActions result = mvc.perform(get("/api/account/{id}", id));
+
+        // Assert
+
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(accountRequest.name()))
+                .andExpect(jsonPath("$.email").value(accountRequest.email()));
+
+
     }
+
+
 }
