@@ -2,6 +2,7 @@ package com.emcode.aikinetics.domain.service;
 
 import com.emcode.aikinetics.api.dto.account.AccountRequest;
 import com.emcode.aikinetics.api.dto.account.AccountResponse;
+import com.emcode.aikinetics.api.error.NotFoundException;
 import com.emcode.aikinetics.domain.model.Account;
 import com.emcode.aikinetics.repository.AccountRepository;
 import org.springframework.stereotype.Service;
@@ -24,4 +25,9 @@ public class AccountService {
     }
 
 
+    public AccountResponse getAccountById(Long id) {
+        Account account = accountRepository.findById(id).
+                orElseThrow(()-> new NotFoundException("No account found with id: " + id));
+        return mapToResponse(account);
+    }
 }

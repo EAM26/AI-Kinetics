@@ -7,11 +7,7 @@ import com.emcode.aikinetics.domain.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -27,11 +23,13 @@ public class AccountController {
         this.validationUtil = validationUtil;
     }
 
-
-
+    @GetMapping("/{id}")
+    public ResponseEntity<AccountResponse> getAccountById(@PathVariable Long id) {
+        return ResponseEntity.ok(accountService.getAccountById(id));
+    }
 
     @PostMapping
-    public ResponseEntity<Object> createAccount(@Valid @RequestBody AccountRequest accountRequest, BindingResult br, UriComponentsBuilder ucb) {
+    public ResponseEntity<?> createAccount(@Valid @RequestBody AccountRequest accountRequest, BindingResult br) {
         if (br.hasFieldErrors()) {
             return ResponseEntity.badRequest().body(validationUtil.validationMessage(br).toString());
         }

@@ -1,10 +1,8 @@
-package com.emcode.aikinetics.service;
+package com.emcode.aikinetics.domain.service;
 
 import com.emcode.aikinetics.api.dto.account.AccountRequest;
 import com.emcode.aikinetics.api.dto.account.AccountResponse;
-import com.emcode.aikinetics.api.mapper.AccountMapper;
 import com.emcode.aikinetics.domain.model.Account;
-import com.emcode.aikinetics.domain.service.AccountService;
 import com.emcode.aikinetics.repository.AccountRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
+import static com.emcode.aikinetics.api.mapper.AccountMapper.mapToResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -32,7 +34,7 @@ class AccountServiceTest {
     AccountService accountService;
 
     @Test
-    void createAccount() {
+    void createShouldReturnAccountResponse() {
         // Arrange
         var input = AccountRequest.builder()
                 .name("myName")
@@ -56,6 +58,30 @@ class AccountServiceTest {
         assertThat(toPersist.getName()).isEqualTo(input.name());
         assertThat(toPersist.getEmail()).isEqualTo(input.email());
 
-        Assertions.assertThat(result).isEqualTo(AccountMapper.mapToResponse(saved));
+        Assertions.assertThat(result).isEqualTo(mapToResponse(saved));
+    }
+
+    @Test
+    void getByIdShouldReturnAccountResponse() {
+        // Arrange
+        Long id = 1L;
+        var accountEntity = Account.builder()
+                .id(id)
+                .name("myName")
+                .email("mail@gmail.nl")
+                .build();
+
+        when(accountRepository.findById(id)).thenReturn(Optional.ofNullable(accountEntity));
+
+        // Act
+        AccountResponse result = accountService.getAccountById(id);
+
+        // Assert
+        assertNotNull(accountEntity);
+        assertThat(result.id()).isEqualTo(id);
+        assertThat(result.name()).isEqualTo(accountEntity.getName());
+        assertThat(result.email()).isEqualTo(accountEntity.getEmail());
+
+
     }
 }
