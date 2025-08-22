@@ -6,8 +6,10 @@ import com.emcode.aikinetics.api.validation.ValidationUtil;
 import com.emcode.aikinetics.domain.model.Account;
 import com.emcode.aikinetics.domain.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -22,7 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(AccountController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class AccountControllerTest {
+
+    private static final String name = "myName";
+    private static final String email = "mail@gmail.nl";
 
     @Autowired
     MockMvc mvc;
@@ -36,21 +42,27 @@ class AccountControllerTest {
     @MockitoBean
     ValidationUtil validationUtil;
 
+    private AccountRequest input;
+    private Account saved;
+
+
+    @BeforeEach
+    void setup() {
+        input = AccountRequest.builder()
+                .name(name)
+                .email(email)
+                .build();
+
+        saved = Account.builder()
+                .id(1L)
+                .name(name)
+                .email(email)
+                .build();
+    }
+
     @Test
     void createShouldReturn201AndBody() throws Exception {
         // Arrange
-        var input = AccountRequest.builder()
-                .name("myName")
-                .email("mail@gmail.nl")
-                .build();
-
-        var saved = Account.builder()
-                .id(1L)
-                .name("myName")
-                .email("mail@gmail.nl")
-                .build();
-
-
         when(accountService.createAccount(input)).thenReturn(AccountMapper.mapToResponse(saved));
 
         // ACT
@@ -62,8 +74,8 @@ class AccountControllerTest {
         result.andExpect(status().isCreated())
                 .andExpect(header().string("Location", "/api/account/1"))
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("myName"))
-                .andExpect(jsonPath("$.email").value("mail@gmail.nl"));
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.email").value(email));
 
 
         verify(accountService).createAccount(any(AccountRequest.class));
@@ -76,28 +88,22 @@ class AccountControllerTest {
     void getAccountByIdShouldReturn200AndResponse() throws Exception {
         // Arrange
         Long id = 10L;
-        var accountRequest = AccountRequest.builder()
-                .name("myName")
-                .email("mail@gmail.nl")
-                .build();
-
-        var accountEntity = Account.builder()
+        var entity = Account.builder()
                 .id(id)
-                .name("myName")
-                .email("mail@gmail.nl")
+                .name(name)
+                .email(email)
                 .build();
 
-        when(accountService.getAccountById(accountEntity.getId())).thenReturn(AccountMapper.mapToResponse(accountEntity));
+        when(accountService.getAccountById(id)).thenReturn(AccountMapper.mapToResponse(entity));
 
         // ACT
         ResultActions result = mvc.perform(get("/api/account/{id}", id));
 
         // Assert
-
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.name").value(accountRequest.name()))
-                .andExpect(jsonPath("$.email").value(accountRequest.email()));
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.email").value(email));
 
 
     }
