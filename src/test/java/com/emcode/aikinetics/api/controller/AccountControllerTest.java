@@ -43,8 +43,8 @@ class AccountControllerTest {
     ValidationUtil validationUtil;
 
     private AccountRequest accountRequestOne;
-    private AccountRequest accountRequestTwo;
-    private AccountRequest accountRequestThree;
+//    private AccountRequest accountRequestTwo;
+//    private AccountRequest accountRequestThree;
     private Account savedAccountOne;
     private Account savedAccountTwo;
     private Account savedAccountThree;
@@ -57,15 +57,15 @@ class AccountControllerTest {
                 .email("albert@gmail.com")
                 .build();
 
-        accountRequestTwo = AccountRequest.builder()
-                .name("Isaac Newton")
-                .email("isaac@hotmail.com")
-                .build();
-
-        accountRequestThree = AccountRequest.builder()
-                .name("Niels Bohr")
-                .email("niels@gmail.com")
-                .build();
+//        accountRequestTwo = AccountRequest.builder()
+//                .name("Isaac Newton")
+//                .email("isaac@hotmail.com")
+//                .build();
+//
+//        accountRequestThree = AccountRequest.builder()
+//                .name("Niels Bohr")
+//                .email("niels@gmail.com")
+//                .build();
 
         savedAccountOne = Account.builder()
                 .id(1L)
