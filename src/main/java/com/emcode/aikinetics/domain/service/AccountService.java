@@ -2,6 +2,7 @@ package com.emcode.aikinetics.domain.service;
 
 import com.emcode.aikinetics.api.dto.account.AccountRequest;
 import com.emcode.aikinetics.api.dto.account.AccountResponse;
+import com.emcode.aikinetics.api.error.DuplicateFieldException;
 import com.emcode.aikinetics.api.error.NotFoundException;
 import com.emcode.aikinetics.api.mapper.AccountMapper;
 import com.emcode.aikinetics.domain.model.Account;
@@ -23,14 +24,21 @@ public class AccountService {
     }
 
     public AccountResponse createAccount(AccountRequest accountRequest) {
-       Account saved = accountRepository.save(mapToEntity(accountRequest));
-       return mapToResponse(saved);
-    }
+        if (accountRepository.existsByName(accountRequest.name())) {
+            throw new DuplicateFieldException("Name: "+ accountRequest.name() + " already exists.");
+        }
+        if (accountRepository.existsByEmail(accountRequest.email())) {
+            throw new DuplicateFieldException("Email: "+ accountRequest.email() + " already exists.");
+        }
+        Account account = accountRepository.save(mapToEntity(accountRequest));
+            return mapToResponse(accountRepository.save(account));
 
+
+    }
 
     public AccountResponse getAccountById(Long id) {
         Account account = accountRepository.findById(id).
-                orElseThrow(()-> new NotFoundException("No account found with id: " + id));
+                orElseThrow(() -> new NotFoundException("No account found with id: " + id));
         return mapToResponse(account);
     }
 
