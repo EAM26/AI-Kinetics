@@ -1,6 +1,6 @@
 package com.emcode.aikinetics.api.controller;
 
-import com.emcode.aikinetics.service.AIService;
+import com.emcode.aikinetics.domain.service.AIService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

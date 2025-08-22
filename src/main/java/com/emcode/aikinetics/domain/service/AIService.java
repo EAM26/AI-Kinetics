@@ -1,4 +1,4 @@
-package com.emcode.aikinetics.service;
+package com.emcode.aikinetics.domain.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

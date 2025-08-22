@@ -1,22 +1,19 @@
 package com.emcode.aikinetics.api.controller;
 
-import com.emcode.aikinetics.api.dto.AccountDto;
-import com.emcode.aikinetics.model.Account;
-import com.emcode.aikinetics.service.AccountService;
+import com.emcode.aikinetics.api.dto.account.AccountRequest;
+import com.emcode.aikinetics.api.dto.account.AccountResponse;
 import com.emcode.aikinetics.api.validation.ValidationUtil;
+import com.emcode.aikinetics.domain.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/accounts")
 public class AccountController {
 
     private final AccountService accountService;
@@ -27,14 +24,24 @@ public class AccountController {
         this.validationUtil = validationUtil;
     }
 
+    @GetMapping
+    public ResponseEntity<List<AccountResponse>> getAllAccounts() {
+        return ResponseEntity.ok(accountService.getAllAccounts());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AccountResponse> getAccountById(@PathVariable Long id) {
+        return ResponseEntity.ok(accountService.getAccountById(id));
+    }
+
     @PostMapping
-    public ResponseEntity<Object> createAccount(@Valid @RequestBody AccountDto accountDto, BindingResult br, UriComponentsBuilder ucb) {
+    public ResponseEntity<?> createAccount(@Valid @RequestBody AccountRequest accountRequest, BindingResult br) {
         if (br.hasFieldErrors()) {
             return ResponseEntity.badRequest().body(validationUtil.validationMessage(br).toString());
         }
 
-        Account savedAccount = accountService.createAccount(accountDto);
-        URI location = URI.create("/api/account/" + savedAccount.getId());
+        AccountResponse savedAccount = accountService.createAccount(accountRequest);
+        URI location = URI.create("/api/accounts/" + savedAccount.id());
 
         return ResponseEntity.created(location).body(savedAccount);
     }

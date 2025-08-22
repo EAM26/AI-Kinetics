@@ -1,5 +1,6 @@
-package com.emcode.aikinetics.service;
+package com.emcode.aikinetics.domain.service.implementation;
 
+import com.emcode.aikinetics.domain.service.AIService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
