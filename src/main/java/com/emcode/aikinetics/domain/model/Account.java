@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,5 +23,8 @@ public class Account {
     private String name;
     @Column(nullable = false, unique = true, length = 100)
     private String email;
+
+    @OneToMany(mappedBy = "account")
+    private List<SportType> sportTypes;
 
 }

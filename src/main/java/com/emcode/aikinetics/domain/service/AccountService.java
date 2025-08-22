@@ -24,14 +24,14 @@ public class AccountService {
     }
 
     public AccountResponse createAccount(AccountRequest accountRequest) {
-        if (accountRepository.existsByName(accountRequest.name())) {
+        if (accountRepository.existsByNameIgnoreCase((accountRequest.name()))) {
             throw new DuplicateFieldException("Name: "+ accountRequest.name() + " already exists.");
         }
-        if (accountRepository.existsByEmail(accountRequest.email())) {
+        if (accountRepository.existsByEmailIgnoreCase((accountRequest.email()))) {
             throw new DuplicateFieldException("Email: "+ accountRequest.email() + " already exists.");
         }
         Account account = accountRepository.save(mapToEntity(accountRequest));
-            return mapToResponse(accountRepository.save(account));
+            return mapToResponse(account);
 
 
     }
