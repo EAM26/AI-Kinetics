@@ -1,9 +1,8 @@
 package com.emcode.aikinetics.api.controller;
 
 import com.emcode.aikinetics.api.dto.account.AccountRequest;
-import com.emcode.aikinetics.api.mapper.AccountMapper;
+import com.emcode.aikinetics.api.dto.account.AccountResponse;
 import com.emcode.aikinetics.api.validation.ValidationUtil;
-import com.emcode.aikinetics.domain.model.Account;
 import com.emcode.aikinetics.domain.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -45,10 +43,9 @@ class AccountControllerTest {
     private AccountRequest accountRequestOne;
 //    private AccountRequest accountRequestTwo;
 //    private AccountRequest accountRequestThree;
-    private Account savedAccountOne;
-    private Account savedAccountTwo;
-    private Account savedAccountThree;
-    private List<Account> savedAccounts;
+    private AccountResponse responseOne;
+    private AccountResponse responseTwo;
+    private AccountResponse responseThree;
 
     @BeforeEach
     void setup() {
@@ -57,49 +54,40 @@ class AccountControllerTest {
                 .email("albert@gmail.com")
                 .build();
 
-//        accountRequestTwo = AccountRequest.builder()
-//                .name("Isaac Newton")
-//                .email("isaac@hotmail.com")
-//                .build();
-//
-//        accountRequestThree = AccountRequest.builder()
-//                .name("Niels Bohr")
-//                .email("niels@gmail.com")
-//                .build();
 
-        savedAccountOne = Account.builder()
+        responseOne = AccountResponse.builder()
                 .id(1L)
                 .name("Albert Einstein")
                 .email("albert@gmail.com")
                 .build();
 
-        savedAccountTwo = Account.builder()
+        responseTwo = AccountResponse.builder()
                 .id(2L)
                 .name("Isaac Newton")
+
                 .email("isaac@hotmail.com")
                 .build();
 
-        savedAccountThree = Account.builder()
+        responseThree = AccountResponse.builder()
                 .id(3L)
                 .name("Niels Bohr")
                 .email("niels@gmail.com")
                 .build();
 
-        savedAccounts = Arrays.asList(savedAccountOne, savedAccountTwo, savedAccountThree);
     }
 
     @Test
     void getAllShouldReturnListAnd200() throws Exception {
         // Arrange
-        when(accountService.getAllAccounts()).thenReturn(savedAccounts.stream().map(AccountMapper::mapToResponse).toList());
+        when(accountService.getAllAccounts()).thenReturn(List.of(responseTwo, responseThree));
 
         // Act
         ResultActions result = mvc.perform(get("/api/accounts"));
 
         // Assert
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(3))
-                .andExpect(jsonPath("$[?(@.id == 1)].name").value("Albert Einstein"))
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[?(@.id == 2)].name").value("Isaac Newton"))
                 .andExpect(jsonPath("$[?(@.id == 3)].name").value("Niels Bohr"))
                 .andExpect(jsonPath("$[?(@.id == 2)].email").value("isaac@hotmail.com"))
                 .andExpect(jsonPath("$[?(@.id == 3)].email").value("niels@gmail.com"));
@@ -110,7 +98,7 @@ class AccountControllerTest {
     void createShouldReturn201AndBody() throws Exception {
         // Arrange
         when(accountService.createAccount(accountRequestOne))
-                .thenReturn(AccountMapper.mapToResponse(savedAccountOne));
+                .thenReturn(responseOne);
 
         // ACT
         ResultActions result = mvc.perform(post("/api/accounts")
@@ -131,15 +119,16 @@ class AccountControllerTest {
     @Test
     void getAccountByIdShouldReturn200AndResponse() throws Exception {
         // Arrange
+
         Long id = 10L;
-        var entity = Account.builder()
-                .id(id)
+        var responseFour = AccountResponse.builder()
+                .id(10L)
                 .name("Max Planck")
                 .email("max@yahoo.com")
                 .build();
 
         when(accountService.getAccountById(id))
-                .thenReturn(AccountMapper.mapToResponse(entity));
+                .thenReturn(responseFour);
 
         // ACT
         ResultActions result = mvc.perform(get("/api/accounts/{id}", id));

@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.emcode.aikinetics.api.mapper.AccountMapper.mapToEntity;
-import static com.emcode.aikinetics.api.mapper.AccountMapper.mapToResponse;
 
 @Service
 public class AccountService {
 
+    private final AccountMapper mapper;
     private final AccountRepository accountRepository;
 
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountMapper mapper, AccountRepository accountRepository) {
+        this.mapper = mapper;
         this.accountRepository = accountRepository;
     }
 
@@ -30,8 +30,8 @@ public class AccountService {
         if (accountRepository.existsByEmailIgnoreCase((accountRequest.email()))) {
             throw new DuplicateFieldException("Email: "+ accountRequest.email() + " already exists.");
         }
-        Account account = accountRepository.save(mapToEntity(accountRequest));
-            return mapToResponse(account);
+        Account account = accountRepository.save(mapper.mapToEntity(accountRequest));
+            return mapper.mapToResponse(account);
 
 
     }
@@ -39,11 +39,11 @@ public class AccountService {
     public AccountResponse getAccountById(Long id) {
         Account account = accountRepository.findById(id).
                 orElseThrow(() -> new NotFoundException("No account found with id: " + id));
-        return mapToResponse(account);
+        return mapper.mapToResponse(account);
     }
 
     public List<AccountResponse> getAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
-        return accounts.stream().map(AccountMapper::mapToResponse).toList();
+        return accounts.stream().map(mapper::mapToResponse).toList();
     }
 }

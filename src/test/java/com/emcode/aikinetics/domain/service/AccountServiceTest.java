@@ -2,20 +2,17 @@ package com.emcode.aikinetics.domain.service;
 
 import com.emcode.aikinetics.api.dto.account.AccountRequest;
 import com.emcode.aikinetics.api.dto.account.AccountResponse;
+import com.emcode.aikinetics.api.mapper.AccountMapper;
 import com.emcode.aikinetics.domain.model.Account;
 import com.emcode.aikinetics.repository.AccountRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.emcode.aikinetics.api.mapper.AccountMapper.mapToResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,6 +29,9 @@ class AccountServiceTest {
 
     @InjectMocks
     AccountService accountService;
+
+    @Spy
+    AccountMapper accountMapper = new AccountMapper();
 
     @Test
     void createShouldReturnAccountResponse() {
@@ -58,7 +58,7 @@ class AccountServiceTest {
         assertThat(toPersist.getName()).isEqualTo(input.name());
         assertThat(toPersist.getEmail()).isEqualTo(input.email());
 
-        Assertions.assertThat(result).isEqualTo(mapToResponse(saved));
+        Assertions.assertThat(result).isEqualTo(accountMapper.mapToResponse(saved));
     }
 
     @Test
