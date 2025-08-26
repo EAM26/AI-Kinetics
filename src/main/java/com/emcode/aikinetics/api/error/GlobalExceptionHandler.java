@@ -12,7 +12,6 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponseBody = new ErrorResponse("NOT_FOUND", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseBody);
     }
-
     @ExceptionHandler(DuplicateFieldException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateField(DuplicateFieldException ex) {
         ErrorResponse errorResponseBody = new ErrorResponse("DUPLICATE VALUE", ex.getMessage());
@@ -21,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleUnexpected(Exception ex) {
-        ErrorResponse  errorResponseBody = new ErrorResponse("UNEXPECTED", "Something went wrong.");
+        ErrorResponse  errorResponseBody = new ErrorResponse("UNEXPECTED", "Something went wrong: " + ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseBody);
     }
 
