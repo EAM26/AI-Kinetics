@@ -14,6 +14,7 @@ public class SportType {
     private String keyName;
 
     @ManyToOne
+    @JoinColumn(name = "account_id")
     private Account account;
 
 

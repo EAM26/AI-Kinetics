@@ -1,7 +1,11 @@
 package com.emcode.aikinetics.api.dto.sporttype;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-public record SportTypeRequest(@NotBlank String keyName, @NotNull Long accountId) {
+public record SportTypeRequest(
+        @Size(min = 3, max = 25, message = "Type name must be between 3 and 25 characters long.")
+        String keyName,
+        @NotNull
+        Long accountId) {
 }

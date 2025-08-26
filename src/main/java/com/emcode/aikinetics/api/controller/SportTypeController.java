@@ -2,27 +2,55 @@ package com.emcode.aikinetics.api.controller;
 
 import com.emcode.aikinetics.api.dto.sporttype.SportTypeRequest;
 import com.emcode.aikinetics.api.dto.sporttype.SportTypeResponse;
+import com.emcode.aikinetics.api.validation.ValidationUtil;
 import com.emcode.aikinetics.domain.service.SportTypeService;
+import com.emcode.aikinetics.repository.SportTypeRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/sport-types")
 public class SportTypeController {
 
     private final SportTypeService sportTypeService;
+    private final ValidationUtil validationUtil;
+    private final SportTypeRepository sportTypeRepository;
 
-    public SportTypeController(SportTypeService sportTypeService) {
+    public SportTypeController(SportTypeService sportTypeService, ValidationUtil validationUtil, SportTypeRepository sportTypeRepository) {
         this.sportTypeService = sportTypeService;
+        this.validationUtil = validationUtil;
+        this.sportTypeRepository = sportTypeRepository;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SportTypeResponse>> getAllSportTypes() {
+        return ResponseEntity.ok(sportTypeService.getAllSportTypes());
+    }
+
+    @GetMapping("/account/{accountId}")
+    public ResponseEntity<List<SportTypeResponse>> getAllSportTypesByAccountId(@PathVariable Long accountId) {
+        return ResponseEntity.ok(sportTypeService.getAllSportTypesByAccountId(accountId));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SportTypeResponse> getSingleSportTypeById(@PathVariable Long id) {
+        SportTypeResponse response = sportTypeService.getSingleSportTypeById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<SportTypeResponse> createSportType(@RequestBody SportTypeRequest request) {
-        SportTypeResponse response =  sportTypeService.createSportType(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> createSportType(@Valid @RequestBody SportTypeRequest request, BindingResult br) {
+        if (br.hasFieldErrors()) {
+            return ResponseEntity.badRequest().body(validationUtil.validationMessage(br).toString());
+        }
+        SportTypeResponse savedSportType = sportTypeService.createSportType(request);
+        URI location = URI.create("/api/sport-types/" + savedSportType.id());
+        return ResponseEntity.created(location).body(savedSportType);
     }
 
 }
