@@ -1,4 +1,4 @@
-package com.emcode.aikinetics.error;
+package com.emcode.aikinetics.exception;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String message) {

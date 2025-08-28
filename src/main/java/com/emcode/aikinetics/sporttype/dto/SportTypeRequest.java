@@ -1,4 +1,4 @@
-package com.emcode.aikinetics.sporttype;
+package com.emcode.aikinetics.sporttype.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,5 +1,7 @@
 package com.emcode.aikinetics.sporttype;
 
+import com.emcode.aikinetics.sporttype.dto.SportTypeRequest;
+import com.emcode.aikinetics.sporttype.dto.SportTypeResponse;
 import com.emcode.aikinetics.validation.ValidationUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +17,10 @@ public class SportTypeController {
 
     private final SportTypeService sportTypeService;
     private final ValidationUtil validationUtil;
-    private final SportTypeRepository sportTypeRepository;
 
-    public SportTypeController(SportTypeService sportTypeService, ValidationUtil validationUtil, SportTypeRepository sportTypeRepository) {
+    public SportTypeController(SportTypeService sportTypeService, ValidationUtil validationUtil) {
         this.sportTypeService = sportTypeService;
         this.validationUtil = validationUtil;
-        this.sportTypeRepository = sportTypeRepository;
     }
 
     @GetMapping

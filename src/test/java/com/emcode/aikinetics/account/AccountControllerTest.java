@@ -1,10 +1,8 @@
-package com.emcode.aikinetics.api.controller;
+package com.emcode.aikinetics.account;
 
-import com.emcode.aikinetics.account.AccountController;
-import com.emcode.aikinetics.account.AccountRequest;
-import com.emcode.aikinetics.account.AccountResponse;
+import com.emcode.aikinetics.account.dto.AccountRequest;
+import com.emcode.aikinetics.account.dto.AccountResponse;
 import com.emcode.aikinetics.validation.ValidationUtil;
-import com.emcode.aikinetics.account.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,7 +40,7 @@ class AccountControllerTest {
     ValidationUtil validationUtil;
 
     private AccountRequest accountRequestOne;
-//    private AccountRequest accountRequestTwo;
+    //    private AccountRequest accountRequestTwo;
 //    private AccountRequest accountRequestThree;
     private AccountResponse responseOne;
     private AccountResponse responseTwo;

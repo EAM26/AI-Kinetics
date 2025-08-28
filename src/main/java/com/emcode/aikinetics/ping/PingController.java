@@ -1,6 +1,6 @@
 package com.emcode.aikinetics.ping;
 
-import com.emcode.aikinetics.error.NotFoundException;
+import com.emcode.aikinetics.exception.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

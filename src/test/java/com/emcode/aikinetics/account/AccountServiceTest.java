@@ -1,7 +1,7 @@
-package com.emcode.aikinetics.domain.service;
+package com.emcode.aikinetics.account;
 
-import com.emcode.aikinetics.account.*;
-import com.emcode.aikinetics.account.AccountRepository;
+import com.emcode.aikinetics.account.dto.AccountRequest;
+import com.emcode.aikinetics.account.dto.AccountResponse;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,9 +1,11 @@
 package com.emcode.aikinetics.sporttype;
 
-import com.emcode.aikinetics.error.DuplicateFieldException;
-import com.emcode.aikinetics.error.NotFoundException;
+import com.emcode.aikinetics.exception.DuplicateFieldException;
+import com.emcode.aikinetics.exception.NotFoundException;
 import com.emcode.aikinetics.account.Account;
 import com.emcode.aikinetics.account.AccountRepository;
+import com.emcode.aikinetics.sporttype.dto.SportTypeRequest;
+import com.emcode.aikinetics.sporttype.dto.SportTypeResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,6 +1,8 @@
 package com.emcode.aikinetics.sporttype;
 
 import com.emcode.aikinetics.account.Account;
+import com.emcode.aikinetics.sporttype.dto.SportTypeRequest;
+import com.emcode.aikinetics.sporttype.dto.SportTypeResponse;
 import org.springframework.stereotype.Component;
 
 @Component

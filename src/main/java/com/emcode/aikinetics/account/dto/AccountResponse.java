@@ -1,4 +1,4 @@
-package com.emcode.aikinetics.account;
+package com.emcode.aikinetics.account.dto;
 
 import lombok.Builder;
 

@@ -1,7 +1,9 @@
 package com.emcode.aikinetics.account;
 
-import com.emcode.aikinetics.error.DuplicateFieldException;
-import com.emcode.aikinetics.error.NotFoundException;
+import com.emcode.aikinetics.account.dto.AccountRequest;
+import com.emcode.aikinetics.account.dto.AccountResponse;
+import com.emcode.aikinetics.exception.DuplicateFieldException;
+import com.emcode.aikinetics.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
