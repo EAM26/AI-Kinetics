@@ -1,25 +1,36 @@
 package com.emcode.aikinetics.domain.service;
 
+import com.emcode.aikinetics.api.dto.sporttype.SportTypeResponse;
+import com.emcode.aikinetics.api.mapper.SportTypeMapper;
+import com.emcode.aikinetics.domain.model.Account;
+import com.emcode.aikinetics.domain.model.SportType;
+import com.emcode.aikinetics.repository.SportTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SportTypeServiceTest {
 
-//    @Mock
-//    SportTypeRepository sportTypeRepository;
-//
-//    @Spy
-//    AccountRepository accountRepository;
-//
-//    @Spy
-//    @InjectMocks
-//    SportTypeMapper sportTypeMapper;
-//
-//
-//    @InjectMocks
-//    SportTypeService sportTypeService;
+
+
+
+    @Mock
+    SportTypeRepository sportTypeRepository;
+
+    @Spy
+    SportTypeMapper sportTypeMapper;
+
+    @InjectMocks
+    SportTypeService sportTypeService;
 
 
     @Test
@@ -29,23 +40,26 @@ class SportTypeServiceTest {
 
     @Test
     void shouldReturnSingleSportTypeById() {
-//        // Arrange
-////        SportTypeMapper sportTypeMapper = new SportTypeMapper(accountRepository);
-////        SportTypeService sportTypeService = new SportTypeService(sportTypeMapper, sportTypeRepository);
-//        Account fakeAccount = new Account(1L, "John", "john@mail.nl");
-//        Long id = 5L;
-//        SportType fake = new SportType(id, "Running", fakeAccount);
-//        when(sportTypeRepository.findById(5L)).thenReturn(Optional.of(fake));
-//
-//        // Act
-//        SportTypeResponse actual = sportTypeService.getSingleSportTypeById(id);
-//
-//        // Assert
-//        assertEquals(fake.getId(), actual.id());
-//        assertEquals(fake.getKeyName(), actual.keyName());
-//        assertEquals(fake.getAccount().getId(), actual.accountId());
-//
+        // Arrange
+        var fakeAccount = new Account(1L, "John", "john@mail.nl", null);
+        var fakeSportType = new SportType(5L, "Running", fakeAccount);
+        var expected = SportTypeResponse.builder()
+                .id(5L)
+                .keyName("Running")
+                .accountId(1L)
+                .build();
+        when(sportTypeRepository.findById(5L)).thenReturn(Optional.of(fakeSportType));
 
+        // Act
+        SportTypeResponse actual = sportTypeService.getSingleSportTypeById(5L);
+
+        // Assert
+        verify(sportTypeRepository).findById(5L);
+        verifyNoMoreInteractions(sportTypeRepository);
+
+        assertEquals(expected.id(), actual.id());
+        assertEquals(expected.keyName(), actual.keyName());
+        assertEquals(expected.accountId(), actual.accountId());
     }
 
     @Test
