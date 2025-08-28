@@ -1,10 +1,7 @@
 package com.emcode.aikinetics.domain.service;
 
-import com.emcode.aikinetics.api.dto.sporttype.SportTypeResponse;
-import com.emcode.aikinetics.api.mapper.SportTypeMapper;
-import com.emcode.aikinetics.domain.model.Account;
-import com.emcode.aikinetics.domain.model.SportType;
-import com.emcode.aikinetics.repository.SportTypeRepository;
+import com.emcode.aikinetics.account.Account;
+import com.emcode.aikinetics.sporttype.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

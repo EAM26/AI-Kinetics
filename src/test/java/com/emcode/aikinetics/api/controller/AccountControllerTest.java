@@ -1,9 +1,10 @@
 package com.emcode.aikinetics.api.controller;
 
-import com.emcode.aikinetics.api.dto.account.AccountRequest;
-import com.emcode.aikinetics.api.dto.account.AccountResponse;
-import com.emcode.aikinetics.api.validation.ValidationUtil;
-import com.emcode.aikinetics.domain.service.AccountService;
+import com.emcode.aikinetics.account.AccountController;
+import com.emcode.aikinetics.account.AccountRequest;
+import com.emcode.aikinetics.account.AccountResponse;
+import com.emcode.aikinetics.validation.ValidationUtil;
+import com.emcode.aikinetics.account.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
